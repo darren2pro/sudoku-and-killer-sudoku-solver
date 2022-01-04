@@ -6,6 +6,8 @@
 //  Copyright © 2022 H. All rights reserved.
 //
 
+import Foundation
+
 typealias SudokuPuzzle = [[Int]]
 
 class NormalSudoku: Sudoku {
