@@ -15,6 +15,7 @@
 		5054C84C239FB90C0019BCA6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5054C84A239FB90C0019BCA6 /* LaunchScreen.storyboard */; };
 		5054C872239FB93F0019BCA6 /* Sudoku.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054C871239FB93F0019BCA6 /* Sudoku.swift */; };
 		5054C876239FB95A0019BCA6 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054C875239FB95A0019BCA6 /* Cell.swift */; };
+		B95016E72784BB0B0027841A /* NormalSudoku.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95016E62784BB0B0027841A /* NormalSudoku.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		5054C858239FB90C0019BCA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5054C871239FB93F0019BCA6 /* Sudoku.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sudoku.swift; sourceTree = "<group>"; };
 		5054C875239FB95A0019BCA6 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		B95016E62784BB0B0027841A /* NormalSudoku.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalSudoku.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				5054C84A239FB90C0019BCA6 /* LaunchScreen.storyboard */,
 				5054C84D239FB90C0019BCA6 /* Info.plist */,
 				5054C847239FB90C0019BCA6 /* Preview Content */,
+				B95016E62784BB0B0027841A /* NormalSudoku.swift */,
 			);
 			path = SudokuSolver;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5054C840239FB9090019BCA6 /* AppDelegate.swift in Sources */,
+				B95016E72784BB0B0027841A /* NormalSudoku.swift in Sources */,
 				5054C876239FB95A0019BCA6 /* Cell.swift in Sources */,
 				5054C842239FB9090019BCA6 /* SceneDelegate.swift in Sources */,
 				5054C844239FB9090019BCA6 /* ContentView.swift in Sources */,
