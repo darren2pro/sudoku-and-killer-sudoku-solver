@@ -9,13 +9,15 @@
 import Foundation
 
 class KillerSudoku: NormalSudoku {
+    // Used for checking whether there are any repeats and updating the max or min values
     var mCageSubset: [[Bool]]
     var mapFromCellToCageNumber: [Cell: Int]
     var mapFromCageNumberToCurrentCageSum: [Int: Int]
+
     init(board: KillerSudokuPuzzle) throws {
         let numOfCages: Int = board.cageRestrictions.count
 
-        // Initialize to empty first
+        // Initialise to empty first
         self.mCageSubset = [[Bool]](repeating: [Bool](repeating: false, count: board.rawPuzzle.count), count: numOfCages) // Sets all to be false
         self.mapFromCellToCageNumber = [:] // Create an empty dictionary
         self.mapFromCageNumberToCurrentCageSum = [:] // Create an empty dictionary
@@ -92,12 +94,19 @@ class KillerSudoku: NormalSudoku {
         super.set(cell: cell, to: value)
         // Reset the cageSubset to reflect the new cageSum. Then update the map from cage number to sum as well.
         if let setVal: Int = value {
-            updateCageSubset(cell: cell, to: value)
-            updateCageSum(cell: cell, newlyAdded: value)
+            updateCageSubset(cell: cell, to: setVal, true)
+            updateCageSum(cell: cell, newlyAdded: setVal)
         } else {
-            // we want to reset
-            error here because not implemented.
+            // Nothing to do. It just means we want to set the board back to 0.
+            // This is already done in the super.set function call.
         }
+    }
+
+    override func setSubsetValue(cell: Cell, value: Int, _ isPresent: Bool) {
+        super.setSubsetValue(cell: cell, value: value, isPresent)
+        // Now need to reset, if isPresent is a false
+        updateCageSubset(cell: cell, to: value, true)
+        updateCageSum(cell: cell, newlyAdded: value)
     }
 
     internal func computeMaxPossibleValueOfCellForACage(cageSum: Int, numberOfCellsInCage: Int) -> Int {
@@ -122,12 +131,14 @@ class KillerSudoku: NormalSudoku {
         return count
     }
 
-    internal func updateCageSubset(cell:Cell, to value: Int) {
-
+    internal func updateCageSubset(cell:Cell, to value: Int, _ isPresent:Bool) {
+        self.mCageSubset[computeCageNumber(cell)][value-1] = isPresent
     }
 
     internal func updateCageSum(cell: Cell, newlyAdded: Int) {
-
+        mapFromCageNumberToCurrentCageSum[computeCageNumber(cell)]! -= newlyAdded
     }
 }
+
+
 
