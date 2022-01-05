@@ -15,3 +15,4 @@ protocol Sudoku {
 
     func setSubsetValue(cell: Cell, value: Int, _ isPresent: Bool)
 }
+

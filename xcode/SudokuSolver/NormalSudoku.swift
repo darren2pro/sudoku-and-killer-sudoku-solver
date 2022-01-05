@@ -41,7 +41,7 @@ class NormalSudoku: Sudoku {
 
     var mBoardSize: Int {
         get {
-            return Int(pow(Float(mBoxSize), 2))
+            Int(pow(Float(mBoxSize), 2))
         }
     }
 
@@ -146,3 +146,4 @@ class NormalSudoku: Sudoku {
     }
 
 }
+

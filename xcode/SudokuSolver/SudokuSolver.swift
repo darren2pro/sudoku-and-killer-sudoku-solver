@@ -45,7 +45,7 @@ class SudokuSolver {
         for possibleValue in possibleOptions {
             // Always going to be valid possibleValue
             self.sudokuPuzzle.set(cell: currCell, to: possibleValue)
-            if solveSudokuPuzzleWithRecursion(Cell(row: currRow+1, col: currCol)) {
+            if solveSudokuPuzzleWithRecursion(Cell(row: currRow + 1, col: currCol)) {
                 return true
             } else {
                 // no solution so we set the board value back to 0 and update the subsets to show that this value is not used.
@@ -59,3 +59,4 @@ class SudokuSolver {
         return false
     }
 }
+
