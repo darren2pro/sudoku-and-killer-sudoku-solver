@@ -28,7 +28,7 @@ func main() {
         let sampleSudoku: Sudoku = try NormalSudoku(board: samplePuzzle)
         print("Initial:")
         sampleSudoku.printBoard()
-        
+
         /////
         if SudokuSolver(sampleSudoku).solve() {
             print("Solution:")
@@ -37,7 +37,7 @@ func main() {
             print("Given Sudoku puzzle cannot be solved.")
         }
         /////
-        
+
     } catch SudokuError.invalidPuzzleDimension(let givenDimension) {
         print("Invalid Puzzle Dimension = \(givenDimension).")
     } catch {
