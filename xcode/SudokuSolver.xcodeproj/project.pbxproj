@@ -23,7 +23,7 @@
 		B95016F12784BF500027841A /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95016F02784BF500027841A /* Main.swift */; };
 		B960E13327869AAA00B059E1 /* CageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B960E13227869AAA00B059E1 /* CageManager.swift */; };
 		B960E13B2786D03200B059E1 /* NormalSudokuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B960E13A2786D03200B059E1 /* NormalSudokuTests.swift */; };
-		B960E1432786E44A00B059E1 /* NormalSudokuSolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B960E1422786E44A00B059E1 /* NormalSudokuSolverTests.swift */; };
+		B960E1472786F84300B059E1 /* NormalSudokuSolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B960E1422786E44A00B059E1 /* NormalSudokuSolverTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -335,7 +335,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B960E1432786E44A00B059E1 /* NormalSudokuSolverTests.swift in Sources */,
+				B960E1472786F84300B059E1 /* NormalSudokuSolverTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

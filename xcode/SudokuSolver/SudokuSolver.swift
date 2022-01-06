@@ -9,10 +9,10 @@
 import Foundation
 
 class SudokuSolver {
-    private var sudokuPuzzle: Sudoku
+    private var sudoku: Sudoku
 
-    init(_ sudokuPuzzle: Sudoku) {
-        self.sudokuPuzzle = sudokuPuzzle
+    init(_ sudoku: Sudoku) {
+        self.sudoku = sudoku
     }
 
     func solve() -> Bool {
@@ -24,16 +24,16 @@ class SudokuSolver {
         var currRow = startingCell.row
         var currCol = startingCell.col
 
-        if currRow == self.sudokuPuzzle.mBoardSize {
+        if currRow == self.sudoku.mBoardSize {
             currRow = 0
             currCol += 1
-            if currCol == self.sudokuPuzzle.mBoardSize {
+            if currCol == self.sudoku.mBoardSize {
                 // This means that we have already filled up all the cells with numbers and so we have solved the entire puzzle.
                 return true
             }
         }
 
-        if !self.sudokuPuzzle.emptyCells.contains(Cell(row: currRow, col: currCol)) {
+        if !self.sudoku.emptyCells.contains(Cell(row: currRow, col: currCol)) {
             // Means that this current cell is filled with a number already.
             currRow += 1
             let nextCell = Cell(row: currRow, col: currCol)
@@ -41,10 +41,10 @@ class SudokuSolver {
         }
 
         let currCell = Cell(row: currRow, col: currCol)
-        let possibleOptions: Set<Int> = self.sudokuPuzzle.options(in: currCell)
+        let possibleOptions: Set<Int> = self.sudoku.options(in: currCell)
         for possibleValue in possibleOptions {
             // Always going to be valid possibleValue
-            self.sudokuPuzzle.set(cell: currCell, to: possibleValue)
+            self.sudoku.set(cell: currCell, to: possibleValue)
 
             if solveSudokuPuzzleWithRecursion(Cell(row: currRow + 1, col: currCol)) {
                 return true
@@ -53,13 +53,13 @@ class SudokuSolver {
                 // board value back to 0 and
                 // update the subsets to show that this value is not used.
                 // This is all done in the function unSet
-                self.sudokuPuzzle.unSet(cell: currCell, to: possibleValue)
+                self.sudoku.unSet(cell: currCell, to: possibleValue)
             }
         }
 
         // Coming here means that all of the possible values
         // cannot lead to a solution. So we simply set it back to 0 and return false.
-        self.sudokuPuzzle.set(cell: currCell, to: nil) // this line is not needed, I think.
+        self.sudoku.set(cell: currCell, to: nil) // this line is not needed, I think.
         return false
     }
 }
