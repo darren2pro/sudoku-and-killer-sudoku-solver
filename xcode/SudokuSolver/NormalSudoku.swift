@@ -11,6 +11,7 @@ import Foundation
 typealias SudokuPuzzle = [[Int]]
 
 class NormalSudoku: Sudoku {
+
     let sideLengthAllowed: Int = 9
 
     var emptyCells: Set<Cell> {
@@ -58,7 +59,7 @@ class NormalSudoku: Sudoku {
         }
         mBoxSize = Int(sqrt(Double(board.count)))
 
-        // Initialize everything to be false. This tracks whether we satisfy the rules of Sudoku, in that whether any of the digits are repeated.
+        // Initialise everything to be false. This tracks whether we satisfy the rules of Sudoku, in that whether any of the digits are repeated.
         mRowSubset = [[Bool]](repeating: [Bool](repeating: false, count: board.count), count: board.count) // Sets all the rows to be false
         mColSubset = [[Bool]](repeating: [Bool](repeating: false, count: board.count), count: board.count) // Sets all the cols to be false
         mBoxSubset = [[Bool]](repeating: [Bool](repeating: false, count: board.count), count: board.count) // Sets all the boxes to be false
@@ -77,25 +78,29 @@ class NormalSudoku: Sudoku {
         }
     }
 
-    internal func setSubsetValue(_ i: Int, _ j: Int, _ value: Int, _ isPresent: Bool) {
+    private func setSubsetValue(_ i: Int, _ j: Int, _ value: Int, _ isPresent: Bool) {
         mRowSubset[i][value - 1] = isPresent
         mColSubset[j][value - 1] = isPresent
         mBoxSubset[computeBoxNo(i, j)][value - 1] = isPresent
     }
 
-    func setSubsetValue(cell: Cell, value: Int, _ isPresent: Bool) {
+    private func setSubsetValue(cell: Cell, value: Int, _ isPresent: Bool) {
         setSubsetValue(cell.row, cell.col, value, isPresent)
     }
 
-    internal func computeBoxNo(_ i: Int, _ j: Int) -> Int {
+    private func computeBoxNo(_ i: Int, _ j: Int) -> Int {
         let boxRow = i / mBoxSize
         let boxCol = j / mBoxSize
 
         return boxRow * mBoxSize + boxCol
     }
 
-    internal func setBoardValue(_ cell: Cell, _ value: Int) {
+    private func setBoardValue(_ cell: Cell, _ value: Int) {
         mBoard[cell.row][cell.col] = value
+    }
+
+    internal func getBoardValue(_ cell: Cell) -> Int {
+        return mBoard[cell.row][cell.col]
     }
 
     func set(cell: Cell, to value: Int?) {
@@ -108,6 +113,16 @@ class NormalSudoku: Sudoku {
             if !self.emptyCells.contains(cell) {
                 setBoardValue(cell, 0)
             }
+        }
+    }
+
+    func unSet(cell: Cell, to value: Int?) {
+        // Undo the set operation. This function is called because the value, though possible, will not lead to a solution.
+        if let val:Int = value {
+            setSubsetValue(cell: cell, value: val, false)
+            set(cell: cell, to: nil)
+        } else {
+            // There is no value being passed, so we simply do nothing
         }
     }
 
@@ -146,4 +161,5 @@ class NormalSudoku: Sudoku {
     }
 
 }
+
 

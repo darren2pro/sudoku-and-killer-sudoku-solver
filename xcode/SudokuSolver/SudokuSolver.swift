@@ -49,9 +49,8 @@ class SudokuSolver {
             if solveSudokuPuzzleWithRecursion(Cell(row: currRow + 1, col: currCol)) {
                 return true
             } else {
-                // no solution so we set the board value back to 0 and update the subsets to show that this value is not used.
-                self.sudokuPuzzle.setSubsetValue(cell: currCell, value: possibleValue, false)
-                self.sudokuPuzzle.set(cell: currCell, to: nil)
+                // no solution so we set the board value back to 0 and update the subsets to show that this value is not used. This is all done in the function unSet
+                self.sudokuPuzzle.unSet(cell: currCell, to: possibleValue)
             }
         }
 
@@ -60,4 +59,3 @@ class SudokuSolver {
         return false
     }
 }
-

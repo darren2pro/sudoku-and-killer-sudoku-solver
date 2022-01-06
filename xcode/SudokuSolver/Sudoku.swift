@@ -13,6 +13,8 @@ protocol Sudoku {
 
     func printBoard()
 
-    func setSubsetValue(cell: Cell, value: Int, _ isPresent: Bool)
+    func unSet(cell: Cell, to value: Int?)
+
 }
+
 
