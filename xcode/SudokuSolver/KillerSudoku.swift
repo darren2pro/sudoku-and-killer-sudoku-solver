@@ -10,7 +10,7 @@ import Foundation
 
 class KillerSudoku: NormalSudoku {
 
-    var mCageManager: CageManager
+    var mCageManager = CageManager()
 
     init(board: KillerSudokuPuzzle) throws {
         try super.init(board: board.rawPuzzle)
@@ -42,4 +42,3 @@ class KillerSudoku: NormalSudoku {
     }
 
 }
-

@@ -17,4 +17,3 @@ protocol Sudoku {
     mutating func unSet(cell: Cell, to value: Int?)
 
 }
-

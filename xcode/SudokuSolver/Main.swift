@@ -44,5 +44,3 @@ func main() {
         print("Other errors.")
     }
 }
-
-main()

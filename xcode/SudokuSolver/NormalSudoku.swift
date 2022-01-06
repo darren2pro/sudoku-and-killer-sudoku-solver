@@ -15,35 +15,29 @@ class NormalSudoku: Sudoku {
     let sideLengthAllowed: Int = 9
 
     var emptyCells: Set<Cell> {
-        get {
-            var emptyCellsToReturn = Set<Cell>()
-            for i in 0..<mBoard.count {
-                for j in 0..<mBoard.count {
-                    let value = mBoard[i][j]
-                    if value == 0 {
-                        let emptyCellToAdd = Cell(row: i, col: j)
-                        emptyCellsToReturn.insert(emptyCellToAdd)
-                    }
+        var emptyCellsToReturn = Set<Cell>()
+        for row in 0..<mBoard.count {
+            for col in 0..<mBoard.count {
+                let value = mBoard[row][col]
+                if value == 0 {
+                    let emptyCellToAdd = Cell(row: row, col: col)
+                    emptyCellsToReturn.insert(emptyCellToAdd)
                 }
             }
-            return emptyCellsToReturn
         }
+        return emptyCellsToReturn
     }
 
     var isSolved: Bool {
-        get {
-            if self.emptyCells.isEmpty {
-                return true
-            } else {
-                return false
-            }
+        if self.emptyCells.isEmpty {
+            return true
+        } else {
+            return false
         }
     }
 
     var mBoardSize: Int {
-        get {
-            Int(pow(Float(mBoxSize), 2))
-        }
+        Int(pow(Float(mBoxSize), 2))
     }
 
     let mBoxSize: Int
@@ -59,38 +53,43 @@ class NormalSudoku: Sudoku {
         }
         mBoxSize = Int(sqrt(Double(board.count)))
 
-        // Initialise everything to be false. This tracks whether we satisfy the rules of Sudoku, in that whether any of the digits are repeated.
-        mRowSubset = [[Bool]](repeating: [Bool](repeating: false, count: board.count), count: board.count) // Sets all the rows to be false
-        mColSubset = [[Bool]](repeating: [Bool](repeating: false, count: board.count), count: board.count) // Sets all the cols to be false
-        mBoxSubset = [[Bool]](repeating: [Bool](repeating: false, count: board.count), count: board.count) // Sets all the boxes to be false
+        // Initialise everything to be false. This tracks whether we
+        // satisfy the rules of Sudoku, in that whether any of the
+        // digits are repeated.
+        // Sets all the rows to be false
+        mRowSubset = [[Bool]](repeating: [Bool](repeating: false, count: board.count), count: board.count)
+        // Sets all the cols to be false
+        mColSubset = [[Bool]](repeating: [Bool](repeating: false, count: board.count), count: board.count)
+        // Sets all the boxes to be false
+        mBoxSubset = [[Bool]](repeating: [Bool](repeating: false, count: board.count), count: board.count)
 
         initSubsets()
     }
 
     internal func initSubsets() {
-        for i in 0..<mBoard.count {
-            for j in 0..<mBoard.count {
-                let value = mBoard[i][j]
+        for row in 0..<mBoard.count {
+            for col in 0..<mBoard.count {
+                let value = mBoard[row][col]
                 if value != 0 {
-                    setSubsetValue(i, j, value, true)
+                    setSubsetValue(row, col, value, true)
                 }
             }
         }
     }
 
-    private func setSubsetValue(_ i: Int, _ j: Int, _ value: Int, _ isPresent: Bool) {
-        mRowSubset[i][value - 1] = isPresent
-        mColSubset[j][value - 1] = isPresent
-        mBoxSubset[computeBoxNo(i, j)][value - 1] = isPresent
+    private func setSubsetValue(_ row: Int, _ col: Int, _ value: Int, _ isPresent: Bool) {
+        mRowSubset[row][value - 1] = isPresent
+        mColSubset[col][value - 1] = isPresent
+        mBoxSubset[computeBoxNo(row, col)][value - 1] = isPresent
     }
 
     private func setSubsetValue(cell: Cell, value: Int, _ isPresent: Bool) {
         setSubsetValue(cell.row, cell.col, value, isPresent)
     }
 
-    private func computeBoxNo(_ i: Int, _ j: Int) -> Int {
-        let boxRow = i / mBoxSize
-        let boxCol = j / mBoxSize
+    private func computeBoxNo(_ row: Int, _ col: Int) -> Int {
+        let boxRow = row / mBoxSize
+        let boxCol = col / mBoxSize
 
         return boxRow * mBoxSize + boxCol
     }
@@ -118,7 +117,7 @@ class NormalSudoku: Sudoku {
 
     func unSet(cell: Cell, to value: Int?) {
         // Undo the set operation. This function is called because the value, though possible, will not lead to a solution.
-        if let val:Int = value {
+        if let val: Int = value {
             setSubsetValue(cell: cell, value: val, false)
             set(cell: cell, to: nil)
         } else {
@@ -138,21 +137,23 @@ class NormalSudoku: Sudoku {
 
     internal func isValid(in cell: Cell, _ value: Int) -> Bool {
         let val = value - 1
-        let isUsed = mRowSubset[cell.row][val] || mColSubset[cell.col][val] || mBoxSubset[computeBoxNo(cell.row, cell.col)][val]
+        let isUsed = mRowSubset[cell.row][val] ||
+        mColSubset[cell.col][val] ||
+        mBoxSubset[computeBoxNo(cell.row, cell.col)][val]
         return !isUsed
     }
 
     func printBoard() {
-        for i in 0..<mBoardSize {
-            if i % mBoxSize == 0 {
+        for row in 0..<mBoardSize {
+            if row.isMultiple(of: mBoxSize) {
                 print(" -----------------------")
             }
-            for j in 0..<mBoardSize {
-                if j % mBoxSize == 0 {
+            for col in 0..<mBoardSize {
+                if col .isMultiple(of: mBoxSize) {
                     print("| ", terminator: "")
                 }
 
-                print(mBoard[i][j] != 0 ? String(mBoard[i][j]) : "X", terminator: "")
+                print(mBoard[row][col] != 0 ? String(mBoard[row][col]) : "X", terminator: "")
                 print(" ", terminator: "")
             }
             print("|")
@@ -161,5 +162,3 @@ class NormalSudoku: Sudoku {
     }
 
 }
-
-
