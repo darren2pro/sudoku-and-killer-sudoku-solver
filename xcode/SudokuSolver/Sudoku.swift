@@ -1,4 +1,5 @@
 protocol Sudoku {
+
     mutating func set(cell: Cell, to value: Int?)
 
     func options(in cell: Cell) -> Set<Int>
@@ -13,8 +14,7 @@ protocol Sudoku {
 
     func printBoard()
 
-    func unSet(cell: Cell, to value: Int?)
+    mutating func unSet(cell: Cell, to value: Int?)
 
 }
-
 
