@@ -9,136 +9,37 @@
 import Foundation
 
 class KillerSudoku: NormalSudoku {
-    // Used for checking whether there are any repeats and updating the max or min values
-    var mCageSubset: [[Bool]]
-    var mapFromCellToCageNumber: [Cell: Int]
-    var mapFromCageNumberToCurrentCageSum: [Int: Int]
+
+    var mCageManager: CageManager
 
     init(board: KillerSudokuPuzzle) throws {
-        let numOfCages: Int = board.cageRestrictions.count
-
-        // Initialise to empty first
-        self.mCageSubset = [[Bool]](repeating: [Bool](repeating: false, count: board.rawPuzzle.count), count: numOfCages) // Sets all to be false
-        self.mapFromCellToCageNumber = [:] // Create an empty dictionary
-        self.mapFromCageNumberToCurrentCageSum = [:] // Create an empty dictionary
-
         try super.init(board: board.rawPuzzle)
-
-        setCageVariablesFromCageRestrictions(board.cageRestrictions)
-    }
-
-    internal func setCageVariablesFromCageRestrictions(_ cageRestrictions: [[Int: [Cell]]]) {
-        var currCageNumber = 0
-
-        for cage in cageRestrictions {
-
-            var numberOfCellsInCage:Int = 0
-            var cageSumGlobal:Int = 0
-
-            for (cageSum, arrayOfCellsInCage) in cage {
-                self.mapFromCageNumberToCurrentCageSum[currCageNumber] = cageSum
-                numberOfCellsInCage = arrayOfCellsInCage.count
-                cageSumGlobal = cageSum
-
-                for cellInCage in arrayOfCellsInCage {
-                    self.mapFromCellToCageNumber[cellInCage] = currCageNumber
-                }
-
-            }
-
-            func computeMaxPossibleValueOfCellForAParticularCage() -> Int {
-                var count:Int = cageSumGlobal
-
-                for i in 1...numberOfCellsInCage {
-                    count -= i
-                }
-
-                return count
-            }
-            func computeMinPossibleValueOfCellForAParticularCage() -> Int {
-                var count:Int = cageSumGlobal
-                var pointer = 9
-
-                for i in 0..<numberOfCellsInCage {
-                    count -= pointer
-                    pointer -= 1
-                }
-
-                return count
-            }
-
-            for possibleValue in 0..<self.mBoardSize {
-                if (possibleValue <= computeMaxPossibleValueOfCellForAParticularCage()) && (possibleValue >=  computeMinPossibleValueOfCellForAParticularCage()) {
-                    self.mCageSubset[currCageNumber][possibleValue] = true
-                }
-            }
-
-            currCageNumber += 1
-        }
+        self.mCageManager = CageManager(board: board, self)
     }
 
     override internal func isValid(in cell: Cell, _ value: Int) -> Bool {
-        let val = value - 1
 
         // Not done. What other conditions? We need to check the sum whether it is correct.
-        let failKillerConditions: Bool = mCageSubset[computeCageNumber(cell)][val] // checks whether the value has already appeared in the cage.
+        let passKillerConditions: Bool = self.mCageManager.passKillerCondition(cell, checking: value)
 
-        return super.isValid(in: cell, value) && failKillerConditions
-    }
-
-    internal func computeCageNumber(_ cell: Cell) -> Int {
-        return self.mapFromCellToCageNumber[cell]!
+        return super.isValid(in: cell, value) && passKillerConditions
     }
 
     override func set(cell: Cell, to value: Int?) {
         super.set(cell: cell, to: value)
         // Reset the cageSubset to reflect the new cageSum. Then update the map from cage number to sum as well.
         if let setVal: Int = value {
-            updateCageSubset(cell: cell, to: setVal, true)
-            updateCageSum(cell: cell, newlyAdded: setVal)
+            self.mCageManager.setAll(cell: cell, to: setVal)
         } else {
             // Nothing to do. It just means we want to set the board back to 0.
             // This is already done in the super.set function call.
         }
     }
 
-    override func setSubsetValue(cell: Cell, value: Int, _ isPresent: Bool) {
-        super.setSubsetValue(cell: cell, value: value, isPresent)
-        // Now need to reset, if isPresent is a false
-        updateCageSubset(cell: cell, to: value, true)
-        updateCageSum(cell: cell, newlyAdded: value)
+    override func unSet(cell: Cell, to value: Int?) {
+        super.unSet(cell: cell, to: value)
+        self.mCageManager.unSetAll(cell: cell, value: value)
     }
 
-    internal func computeMaxPossibleValueOfCellForACage(cageSum: Int, numberOfCellsInCage: Int) -> Int {
-        var count:Int = cageSum
-
-        for i in 1...numberOfCellsInCage {
-            count -= i
-        }
-
-        return count
-    }
-
-    internal func computeMinPossibleValueOfCellForACage(cageSum: Int, numberOfCellsInCage: Int) -> Int {
-        var count:Int = cageSum
-        var pointer = 9
-
-        for i in 0..<numberOfCellsInCage {
-            count -= pointer
-            pointer -= 1
-        }
-
-        return count
-    }
-
-    internal func updateCageSubset(cell:Cell, to value: Int, _ isPresent:Bool) {
-        self.mCageSubset[computeCageNumber(cell)][value-1] = isPresent
-    }
-
-    internal func updateCageSum(cell: Cell, newlyAdded: Int) {
-        mapFromCageNumberToCurrentCageSum[computeCageNumber(cell)]! -= newlyAdded
-    }
 }
-
-
 
