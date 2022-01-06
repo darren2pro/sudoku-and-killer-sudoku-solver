@@ -21,14 +21,15 @@ class CageManager {
     init(board: KillerSudokuPuzzle, _ killerSudoku: KillerSudoku) {
         self.killerSudoku = killerSudoku
 
+        setCageNumberToSetOfCells(board: board, killerSudoku)
+
+        self.mapFromCellToCageNumber = setMapFromCellToCageNumber(board.cageRestrictions)
+
         self.mapFromCageNumberToCurrentCageSum = setMapFromCageNumberToCurrentCageSum(board.cageRestrictions)
         self.updateCurrCageSum(killerSudoku)
 
         self.mCageSubset = setCageSubset(board, killerSudoku)
 
-        self.mapFromCellToCageNumber = setMapFromCellToCageNumber(board.cageRestrictions)
-
-        setCageNumberToSetOfCells(board: board, killerSudoku)
     }
 
     private func setCageNumberToSetOfCells(board: KillerSudokuPuzzle, _ killerSudoku: KillerSudoku) {
@@ -133,11 +134,14 @@ class CageManager {
         var count: Int = mapFromCageNumberToCurrentCageSum[cageNumber]!
         let numberOfEmptyCellsInCage: Int = cageNumberToSetOfEmptyCells(cageNumber).count
 
-        for emptyCellsPointer in 1...numberOfEmptyCellsInCage {
-            count -= emptyCellsPointer
+        if numberOfEmptyCellsInCage <= 0 {
+            return count
+        } else {
+            for emptyCellsPointer in 1...numberOfEmptyCellsInCage {
+                count -= emptyCellsPointer
+            }
+            return count
         }
-
-        return count
     }
 
     private func computeMinPossibleValueOfCellForACage(_ cageNumber: Int) -> Int {
