@@ -13,14 +13,14 @@ class KillerSudokuTests: XCTestCase {
 
     let sudokuPuzzle: SudokuPuzzle = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [1, 0, 4, 0, 0, 6, 0, 0, 0],
-        [0, 0, 3, 1, 4, 9, 7, 0, 0],
-        [0, 0, 7, 8, 0, 0, 1, 0, 2],
-        [2, 0, 0, 0, 0, 1, 0, 9, 0],
-        [0, 0, 1, 5, 0, 0, 4, 0, 6],
-        [0, 0, 2, 4, 1, 8, 9, 0, 0],
-        [8, 0, 5, 0, 0, 2, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0] // Not correct.
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
 
     let cageRestrictions: [[Int: [Cell]]] = [
@@ -59,6 +59,18 @@ class KillerSudokuTests: XCTestCase {
         [8: [Cell(row: 8, col: 7), Cell(row: 8, col: 8)]]
     ]
 
+    let sudokuPuzzle1: SudokuPuzzle = [
+        [2, 0, 5, 8, 9, 6, 3, 1, 7],
+        [8, 9, 6, 7, 3, 1, 4, 0, 5],
+        [3, 1, 7, 4, 2, 5, 8, 6, 9],
+        [7, 8, 9, 0, 4, 2, 1, 5, 3],
+        [5, 3, 2, 1, 7, 0, 6, 9, 4],
+        [4, 6, 1, 3, 5, 9, 2, 7, 8],
+        [6, 0, 4, 2, 8, 7, 9, 3, 1],
+        [1, 7, 3, 9, 6, 4, 5, 8, 2],
+        [9, 2, 8, 5, 1, 3, 7, 4, 6]
+    ]
+
     var killerSudokuPuzzle: KillerSudokuPuzzle?
 
     var killerSudoku: KillerSudoku?
@@ -68,16 +80,54 @@ class KillerSudokuTests: XCTestCase {
         try super.setUpWithError()
         self.killerSudokuPuzzle = KillerSudokuPuzzle(rawPuzzle: sudokuPuzzle, cageRestrictions: cageRestrictions)
 
-        self.killerSudoku = try KillerSudoku(board: killerSudokuPuzzle!)
+        self.killerSudoku = try KillerSudoku(board: self.killerSudokuPuzzle!)
     }
 
+    func testKillerWithEmptyPuzzleSolution() throws {
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+        let testInput1Solution: SudokuPuzzle = [
+            [6, 2, 3, 8, 1, 9, 4, 5, 7],
+            [1, 4, 5, 3, 7, 2, 9, 8, 6],
+            [9, 7, 8, 6, 5, 4, 1, 2, 3],
+            [7, 9, 2, 4, 8, 1, 6, 3, 5],
+            [4, 8, 6, 5, 2, 3, 7, 1, 9],
+            [3, 5, 1, 7, 9, 6, 8, 4, 2],
+            [5, 1, 7, 2, 6, 8, 3, 9, 4],
+            [2, 3, 9, 1, 4, 7, 5, 6, 8],
+            [8, 6, 4, 9, 3, 5, 2, 7, 1]
+        ]
+
+        let solver: SudokuSolver = SudokuSolver(killerSudoku!)
+        let canComputeSolution: Bool = solver.solve()
+        XCTAssertTrue(canComputeSolution)
+
+        let computedSolution: SudokuPuzzle = self.killerSudoku!.mBoard
+
+        XCTAssertEqual(testInput1Solution, computedSolution, "The solve function doesn't work correctly for killer sudoku.")
+
+    }
+
+    func testKillerWithPartialPuzzle() {
+
+        let testInputSolution: SudokuPuzzle = [
+            [2, 4, 5, 8, 9, 6, 3, 1, 7],
+            [8, 9, 6, 7, 3, 1, 4, 2, 5],
+            [3, 1, 7, 4, 2, 5, 8, 6, 9],
+            [7, 8, 9, 6, 4, 2, 1, 5, 3],
+            [5, 3, 2, 1, 7, 8, 6, 9, 4],
+            [4, 6, 1, 3, 5, 9, 2, 7, 8],
+            [6, 5, 4, 2, 8, 7, 9, 3, 1],
+            [1, 7, 3, 9, 6, 4, 5, 8, 2],
+            [9, 2, 8, 5, 1, 3, 7, 4, 6]
+        ]
+
+        let solver: SudokuSolver = SudokuSolver(killerSudoku!)
+        let canComputeSolution: Bool = solver.solve()
+        XCTAssertTrue(canComputeSolution)
+
+        let computedSolution: SudokuPuzzle = self.killerSudoku!.mBoard
+
+        XCTAssertEqual(testInputSolution, computedSolution, "The solve function doesn't work correctly for killer sudoku.")
     }
 
 }
