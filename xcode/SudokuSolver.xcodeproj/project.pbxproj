@@ -23,6 +23,7 @@
 		B95016F12784BF500027841A /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95016F02784BF500027841A /* Main.swift */; };
 		B960E13327869AAA00B059E1 /* CageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B960E13227869AAA00B059E1 /* CageManager.swift */; };
 		B960E13B2786D03200B059E1 /* NormalSudokuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B960E13A2786D03200B059E1 /* NormalSudokuTests.swift */; };
+		B960E1432786E44A00B059E1 /* NormalSudokuSolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B960E1422786E44A00B059E1 /* NormalSudokuSolverTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,8 @@
 		B960E13227869AAA00B059E1 /* CageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CageManager.swift; sourceTree = "<group>"; };
 		B960E1382786D03200B059E1 /* NormalSudokuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NormalSudokuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B960E13A2786D03200B059E1 /* NormalSudokuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalSudokuTests.swift; sourceTree = "<group>"; };
+		B960E1412786E44A00B059E1 /* SudokuSolverTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SudokuSolverTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		B960E1422786E44A00B059E1 /* NormalSudokuSolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalSudokuSolverTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +149,8 @@
 			isa = PBXGroup;
 			children = (
 				5054C858239FB90C0019BCA6 /* Info.plist */,
+				B960E1422786E44A00B059E1 /* NormalSudokuSolverTests.swift */,
+				B960E1412786E44A00B059E1 /* SudokuSolverTests-Bridging-Header.h */,
 			);
 			path = SudokuSolverTests;
 			sourceTree = "<group>";
@@ -230,6 +235,7 @@
 					};
 					5054C851239FB90C0019BCA6 = {
 						CreatedOnToolsVersion = 11.2.1;
+						LastSwiftMigration = 1320;
 						TestTargetID = 5054C83B239FB9090019BCA6;
 					};
 					B960E1372786D03200B059E1 = {
@@ -329,6 +335,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B960E1432786E44A00B059E1 /* NormalSudokuSolverTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -528,6 +535,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5QVR84ECHQ;
 				INFOPLIST_FILE = SudokuSolverTests/Info.plist;
@@ -539,6 +547,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cs3217.a0144892w.SudokuSolverTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SudokuSolverTests/SudokuSolverTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SudokuSolver.app/SudokuSolver";
@@ -550,6 +560,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5QVR84ECHQ;
 				INFOPLIST_FILE = SudokuSolverTests/Info.plist;
@@ -561,6 +572,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cs3217.a0144892w.SudokuSolverTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SudokuSolverTests/SudokuSolverTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SudokuSolver.app/SudokuSolver";
