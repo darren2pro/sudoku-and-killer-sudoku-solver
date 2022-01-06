@@ -11,6 +11,7 @@ import Foundation
 typealias SudokuPuzzle = [[Int]]
 
 class NormalSudoku: Sudoku {
+
     let sideLengthAllowed: Int = 9
 
     var emptyCells: Set<Cell> {
@@ -83,7 +84,7 @@ class NormalSudoku: Sudoku {
         mBoxSubset[computeBoxNo(i, j)][value - 1] = isPresent
     }
 
-    func setSubsetValue(cell: Cell, value: Int, _ isPresent: Bool) {
+    internal func setSubsetValue(cell: Cell, value: Int, _ isPresent: Bool) {
         setSubsetValue(cell.row, cell.col, value, isPresent)
     }
 
@@ -108,6 +109,16 @@ class NormalSudoku: Sudoku {
             if !self.emptyCells.contains(cell) {
                 setBoardValue(cell, 0)
             }
+        }
+    }
+
+    func unSet(cell: Cell, to value: Int?) {
+        // Undo the set operation. This function is called because the value, though possible, will not lead to a solution.
+        if let val:Int = value {
+            setSubsetValue(cell: cell, value: value, false)
+            set(cell: cell, to: nil)
+        } else {
+            // There is no value being passed, so we simply do nothing
         }
     }
 
@@ -146,4 +157,5 @@ class NormalSudoku: Sudoku {
     }
 
 }
+
 
