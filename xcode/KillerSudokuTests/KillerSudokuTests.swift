@@ -127,12 +127,18 @@ class KillerSudokuTests: XCTestCase {
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         try super.setUpWithError()
-        self.killerSudokuPuzzleEmpty = KillerSudokuPuzzle(rawPuzzle: sudokuPuzzleEmpty, cageRestrictions: cageRestrictionsEmpty)
+        self.killerSudokuPuzzleEmpty = KillerSudokuPuzzle(
+            rawNormalSudokuPuzzle: sudokuPuzzleEmpty,
+            cageRestrictions: cageRestrictionsEmpty
+        )
 
         self.killerSudokuEmpty = try KillerSudoku(board: self.killerSudokuPuzzleEmpty!)
 
         // Initialising the other puzzle
-        self.killerSudokuPuzzlePartial = KillerSudokuPuzzle(rawPuzzle: sudokuPuzzlePartial, cageRestrictions: cageRestrictionsPartial)
+        self.killerSudokuPuzzlePartial = KillerSudokuPuzzle(
+            rawNormalSudokuPuzzle: sudokuPuzzlePartial,
+            cageRestrictions: cageRestrictionsPartial
+        )
 
         self.killerSudokuPartial = try KillerSudoku(board: killerSudokuPuzzlePartial!)
     }
@@ -141,24 +147,19 @@ class KillerSudokuTests: XCTestCase {
         // Test input 1 constructor is already tested in the set up
 
         // Test input 2
-        self.killerSudokuPuzzleEmpty = KillerSudokuPuzzle(rawPuzzle: sudokuPuzzlePartial, cageRestrictions: cageRestrictionsPartial)
+        self.killerSudokuPuzzleEmpty = KillerSudokuPuzzle(
+            rawNormalSudokuPuzzle: sudokuPuzzlePartial,
+            cageRestrictions: cageRestrictionsPartial
+        )
 
         self.killerSudokuEmpty = try KillerSudoku(board: self.killerSudokuPuzzleEmpty!)
 
     }
 
     func testSetFunctionForKillerSudoku() {
-        let currCell: Cell = Cell(row: 0, col: 0)
-        let cageNum: Int = self.killerSudokuEmpty!.mCageManager.mapFromCellToCageNumber[currCell]!
-
-        let initialCageSum: Int = self.killerSudokuEmpty!.mCageManager.mapFromCageNumberToCurrentCageSum[cageNum]!
-
+        let currCell = Cell(row: 0, col: 0)
         self.killerSudokuEmpty!.set(cell: currCell, to: 6)
         XCTAssertEqual(6, self.killerSudokuEmpty!.getBoardValue(currCell))
-
-        let finalCageSum: Int = self.killerSudokuEmpty!.mCageManager.mapFromCageNumberToCurrentCageSum[cageNum]!
-
-        XCTAssertEqual(initialCageSum - 6, finalCageSum)
     }
 
     func testKillerWithEmptyPuzzleSolution() throws {
@@ -175,9 +176,9 @@ class KillerSudokuTests: XCTestCase {
             [8, 6, 4, 9, 3, 5, 2, 7, 1]
         ]
 
-        let solver: SudokuSolver = SudokuSolver(killerSudokuEmpty!)
+        let solver = SudokuSolver(killerSudokuEmpty!)
         let canComputeSolution: Bool = solver.solve()
-//        XCTAssertTrue(canComputeSolution)
+        XCTAssertTrue(canComputeSolution)
 
         let computedSolution: SudokuPuzzle = self.killerSudokuEmpty!.mBoard
 
@@ -201,7 +202,7 @@ class KillerSudokuTests: XCTestCase {
             [9, 2, 8, 5, 1, 3, 7, 4, 6]
         ]
 
-        let solver: SudokuSolver = SudokuSolver(killerSudokuPartial!)
+        let solver = SudokuSolver(killerSudokuPartial!)
         let canComputeSolution: Bool = solver.solve()
         XCTAssertTrue(canComputeSolution)
 

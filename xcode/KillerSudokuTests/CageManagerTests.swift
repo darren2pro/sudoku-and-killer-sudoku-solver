@@ -128,12 +128,19 @@ class CageManagerTests: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         try super.setUpWithError()
 
-        self.killerSudokuPuzzleEmpty = KillerSudokuPuzzle(rawPuzzle: sudokuPuzzleEmpty, cageRestrictions: cageRestrictionsEmpty)
+        self.killerSudokuPuzzleEmpty = KillerSudokuPuzzle(
+            rawNormalSudokuPuzzle: sudokuPuzzleEmpty,
+            cageRestrictions: cageRestrictionsEmpty
+        )
 
-        self.killerSudokuEmpty = try KillerSudoku(board: self.killerSudokuPuzzleEmpty!)
+        self.killerSudokuEmpty = try KillerSudoku(
+            board: self.killerSudokuPuzzleEmpty!)
 
         // Initialising the other puzzle
-        self.killerSudokuPuzzlePartial = KillerSudokuPuzzle(rawPuzzle: sudokuPuzzlePartial, cageRestrictions: cageRestrictionsPartial)
+        self.killerSudokuPuzzlePartial = KillerSudokuPuzzle(
+            rawNormalSudokuPuzzle: sudokuPuzzlePartial,
+            cageRestrictions: cageRestrictionsPartial
+        )
 
         self.killerSudokuPartial = try KillerSudoku(board: killerSudokuPuzzlePartial!)
     }
@@ -150,11 +157,4 @@ class CageManagerTests: XCTestCase {
         XCTAssertEqual(Set<Int>([8, 4]), self.killerSudokuPartial!.options(in: Cell(row: 2, col: 6)))
     }
 
-    func testOptionsForEmptyKiller() {
-        let currCell: Cell = Cell(row: 0, col: 0)
-
-        print(self.killerSudokuEmpty!.options(in: currCell))
-        print(self.killerSudokuEmpty!.cellToCageSum(currCell))
-        print("max:", self.killerSudokuEmpty!.mCageManager.computeMaxPossibleValueOfCellForACage(currCell))
-    }
 }

@@ -99,7 +99,7 @@ class NormalSudoku: Sudoku {
     }
 
     internal func getBoardValue(_ cell: Cell) -> Int {
-        return mBoard[cell.row][cell.col]
+        mBoard[cell.row][cell.col]
     }
 
     func set(cell: Cell, to value: Int?) {
@@ -108,7 +108,8 @@ class NormalSudoku: Sudoku {
             setSubsetValue(cell.row, cell.col, setValue, true)
             setBoardValue(cell, setValue)
         } else {
-            // Means that value was nil, so there is nothing to do. We simply reset the cell on the board to 0 if needed.
+            // Means that value was nil, so there is nothing to do.
+            // We simply reset the cell on the board to 0 if needed.
             if !self.emptyCells.contains(cell) {
                 setBoardValue(cell, 0)
             }
@@ -116,7 +117,8 @@ class NormalSudoku: Sudoku {
     }
 
     func unSet(cell: Cell, to value: Int?) {
-        // Undo the set operation. This function is called because the value, though possible, will not lead to a solution.
+        // Undo the set operation. This function is called because the value,
+        // though possible, will not lead to a solution.
         if let val: Int = value {
             setSubsetValue(cell: cell, value: val, false)
             set(cell: cell, to: nil)

@@ -10,6 +10,6 @@ import Foundation
 
 /// This structure takes a rawPuzzle of type: SudokuPuzzle and cageRestrictions of type: [[Int: [Cell]]]
 struct KillerSudokuPuzzle {
-    var rawPuzzle: SudokuPuzzle
+    var rawNormalSudokuPuzzle: SudokuPuzzle
     var cageRestrictions: [[Int: [Cell]]]
 }

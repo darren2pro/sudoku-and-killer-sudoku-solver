@@ -51,7 +51,7 @@ class NormalSudokuSolverTests: XCTestCase {
             [2, 1, 4, 8, 3, 7, 5, 9, 6]
         ]
 
-        let solver: SudokuSolver = SudokuSolver(testNormalSudoku!)
+        let solver = SudokuSolver(testNormalSudoku!)
         XCTAssert(solver.solve(), "This puzzle should be solvable, but solver is unable to solve.")
 
         let computedSolution: SudokuPuzzle = self.testNormalSudoku!.mBoard
@@ -63,7 +63,8 @@ class NormalSudokuSolverTests: XCTestCase {
         // This is an example of a performance test case.
         self.measure {
             // Put the code you want to measure the time of here.
-            let solver: SudokuSolver = SudokuSolver(testNormalSudoku!)
+            let solver = SudokuSolver(testNormalSudoku!)
+
             solver.solve()
             testNormalSudoku!.printBoard()
         }

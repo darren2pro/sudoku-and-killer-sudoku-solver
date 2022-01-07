@@ -28,7 +28,8 @@ class SudokuSolver {
             currRow = 0
             currCol += 1
             if currCol == self.sudoku.mBoardSize {
-                // This means that we have already filled up all the cells with numbers and so we have solved the entire puzzle.
+                // This means that we have already filled up all the cells with numbers
+                // and so we have solved the entire puzzle.
                 return true
             }
         }
@@ -47,6 +48,7 @@ class SudokuSolver {
             self.sudoku.set(cell: currCell, to: possibleValue)
 
             if solveSudokuPuzzleWithRecursion(Cell(row: currRow + 1, col: currCol)) {
+//                self.sudoku.printBoard()
                 return true
             } else {
                 // No solution so we set the
