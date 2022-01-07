@@ -10,17 +10,21 @@ import Foundation
 
 class CageManager {
     // Used for checking whether there are any repeats and updating the max or min values
+    var mapFromCellToCage: [Cell: Cage] = [:]
+
     var mCageSubset: [[Bool]] = []
     var mapFromCellToCageNumber: [Cell: Int] = [:]
     var mapFromCageNumberToCurrentCageSum: [Int: Int] = [:]
     var mCageNumberToSetOfCells: [Int: Set<Cell>] = [:]
+
     var killerSudoku: KillerSudoku?
 
     init() { }
 
     init(board: KillerSudokuPuzzle, _ killerSudoku: KillerSudoku) {
         self.killerSudoku = killerSudoku
-
+        initialiseMapFromCellToCage(board: board, killerSudoku)
+        /*
         setCageNumberToSetOfCells(board: board, killerSudoku)
 
         self.mapFromCellToCageNumber = setMapFromCellToCageNumber(board.cageRestrictions)
@@ -29,6 +33,19 @@ class CageManager {
         self.updateCurrCageSum(killerSudoku)
 
         self.mCageSubset = setCageSubset(board, killerSudoku)
+         */
+
+    }
+
+    private func initialiseMapFromCellToCage(board: KillerSudokuPuzzle, _ killerSudoku: KillerSudoku) {
+        for cage in board.cageRestrictions {
+            let cageSum: Int = cage.first!.key
+            let cellsContained: [Cell] = cage.first!.value
+            let newCage: Cage = Cage(cellsContained: cellsContained, cageSum: cageSum)
+            for cell in cellsContained {
+                self.mapFromCellToCage[cell] = newCage
+            }
+        }
 
     }
 
@@ -87,13 +104,15 @@ class CageManager {
         // Checks for the maximum and minimum possible value within that cage
         for cage in board.cageRestrictions {
             let cageNumber: Int = board.cageRestrictions.firstIndex(of: cage)!
-            for possibleValue in 0..<killerSudoku.mBoardSize {
+            for possibleValue in 1...killerSudoku.mBoardSize {
                 let lessThanMax: Bool = possibleValue <= computeMaxPossibleValueOfCellForACage(cageNumber)
                 let moreThanMin: Bool = possibleValue >= computeMinPossibleValueOfCellForACage(cageNumber)
-                let alreadyUsedByAnotherCellInSameCage: Bool = mCageSubset[cageNumber][possibleValue]
+                let alreadyUsedByAnotherCellInSameCage: Bool = mCageSubset[cageNumber][possibleValue - 1]
 
                 if lessThanMax && moreThanMin && !alreadyUsedByAnotherCellInSameCage {
-                    mCageSubset[cageNumber][possibleValue] = true
+                    mCageSubset[cageNumber][possibleValue - 1] = false
+                } else {
+                    mCageSubset[cageNumber][possibleValue - 1] = true
                 }
 
             }
@@ -132,16 +151,23 @@ class CageManager {
 
     private func computeMaxPossibleValueOfCellForACage(_ cageNumber: Int) -> Int {
         var count: Int = mapFromCageNumberToCurrentCageSum[cageNumber]!
-        let numberOfEmptyCellsInCage: Int = cageNumberToSetOfEmptyCells(cageNumber).count
+        let numberOfOtherEmptyCellsInCage: Int = cageNumberToSetOfEmptyCells(cageNumber).count - 1
 
-        if numberOfEmptyCellsInCage <= 0 {
+        print("Number of empty cells in 0,0:", numberOfOtherEmptyCellsInCage)
+
+        if numberOfOtherEmptyCellsInCage <= 0 {
             return count
         } else {
-            for emptyCellsPointer in 1...numberOfEmptyCellsInCage {
+            for emptyCellsPointer in 1...numberOfOtherEmptyCellsInCage {
                 count -= emptyCellsPointer
             }
             return count
         }
+    }
+
+    internal func computeMaxPossibleValueOfCellForACage(_ cell: Cell) -> Int {
+        let cageNum: Int = self.mapFromCellToCageNumber[cell]!
+        return computeMaxPossibleValueOfCellForACage(cageNum)
     }
 
     private func computeMinPossibleValueOfCellForACage(_ cageNumber: Int) -> Int {
@@ -176,6 +202,11 @@ class CageManager {
             // Do nothing.
         }
 
+    }
+
+    internal func cellToCageSum(_ cell: Cell) -> Int {
+        let cageNum: Int = self.mapFromCellToCageNumber[cell]!
+        return self.mapFromCageNumberToCurrentCageSum[cageNum]!
     }
 
 }

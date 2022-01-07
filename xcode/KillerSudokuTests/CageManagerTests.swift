@@ -11,7 +11,7 @@ import XCTest
 
 class CageManagerTests: XCTestCase {
 
-    let sudokuPuzzle: SudokuPuzzle = [
+    let sudokuPuzzleEmpty: SudokuPuzzle = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -23,7 +23,7 @@ class CageManagerTests: XCTestCase {
         [0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
 
-    let cageRestrictions: [[Int: [Cell]]] = [
+    let cageRestrictionsEmpty: [[Int: [Cell]]] = [
         [8: [Cell(row: 0, col: 0), Cell(row: 0, col: 1)]],
         [9: [Cell(row: 0, col: 6), Cell(row: 0, col: 7)]],
         [8: [Cell(row: 0, col: 2), Cell(row: 1, col: 2)]],
@@ -59,7 +59,7 @@ class CageManagerTests: XCTestCase {
         [8: [Cell(row: 8, col: 7), Cell(row: 8, col: 8)]]
     ]
 
-    let sudokuPuzzle1: SudokuPuzzle = [
+    let sudokuPuzzlePartial: SudokuPuzzle = [
         [2, 0, 5, 8, 9, 6, 3, 1, 7],
         [8, 9, 6, 7, 3, 1, 0, 0, 5],
         [3, 1, 7, 0, 0, 5, 0, 6, 9],
@@ -71,7 +71,7 @@ class CageManagerTests: XCTestCase {
         [9, 2, 8, 5, 1, 3, 7, 4, 6]
     ]
 
-    let cageRestrictions1: [[Int: [Cell]]] = [
+    let cageRestrictionsPartial: [[Int: [Cell]]] = [
         [10: [Cell(row: 0, col: 0), Cell(row: 1, col: 0)]],
         [19: [Cell(row: 0, col: 1), Cell(row: 1, col: 1), Cell(row: 1, col: 2)]],
         [5: [Cell(row: 0, col: 2)]],
@@ -118,36 +118,43 @@ class CageManagerTests: XCTestCase {
         [11: [Cell(row: 8, col: 0), Cell(row: 8, col: 1)]]
     ]
 
-    var killerSudokuPuzzle: KillerSudokuPuzzle?
-    var killerSudoku: KillerSudoku?
+    var killerSudokuPuzzleEmpty: KillerSudokuPuzzle?
+    var killerSudokuEmpty: KillerSudoku?
 
-    var killerSudokuPuzzle1: KillerSudokuPuzzle?
-    var killerSudoku1: KillerSudoku?
+    var killerSudokuPuzzlePartial: KillerSudokuPuzzle?
+    var killerSudokuPartial: KillerSudoku?
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         try super.setUpWithError()
 
-        self.killerSudokuPuzzle = KillerSudokuPuzzle(rawPuzzle: sudokuPuzzle, cageRestrictions: cageRestrictions)
+        self.killerSudokuPuzzleEmpty = KillerSudokuPuzzle(rawPuzzle: sudokuPuzzleEmpty, cageRestrictions: cageRestrictionsEmpty)
 
-        self.killerSudoku = try KillerSudoku(board: self.killerSudokuPuzzle!)
+        self.killerSudokuEmpty = try KillerSudoku(board: self.killerSudokuPuzzleEmpty!)
 
         // Initialising the other puzzle
-        self.killerSudokuPuzzle1 = KillerSudokuPuzzle(rawPuzzle: sudokuPuzzle1, cageRestrictions: cageRestrictions1)
+        self.killerSudokuPuzzlePartial = KillerSudokuPuzzle(rawPuzzle: sudokuPuzzlePartial, cageRestrictions: cageRestrictionsPartial)
 
-        self.killerSudoku1 = try KillerSudoku(board: killerSudokuPuzzle1!)
+        self.killerSudokuPartial = try KillerSudoku(board: killerSudokuPuzzlePartial!)
     }
 
     func testInput1() throws {
 
         print("For showing:")
 
-        XCTAssertEqual(Set<Int>([2]), self.killerSudoku1!.options(in: Cell(row: 1, col: 7)))
-        XCTAssertEqual(Set<Int>([4]), self.killerSudoku1!.options(in: Cell(row: 1, col: 6)))
-        XCTAssertEqual(Set<Int>([4]), self.killerSudoku1!.options(in: Cell(row: 0, col: 1)))
-        XCTAssertEqual(Set<Int>([4]), self.killerSudoku1!.options(in: Cell(row: 2, col: 3)))
-        XCTAssertEqual(Set<Int>([2]), self.killerSudoku1!.options(in: Cell(row: 2, col: 4)))
-        XCTAssertEqual(Set<Int>([8, 4]), self.killerSudoku1!.options(in: Cell(row: 2, col: 6)))
+        XCTAssertEqual(Set<Int>([2]), self.killerSudokuPartial!.options(in: Cell(row: 1, col: 7)))
+        XCTAssertEqual(Set<Int>([4]), self.killerSudokuPartial!.options(in: Cell(row: 1, col: 6)))
+        XCTAssertEqual(Set<Int>([4]), self.killerSudokuPartial!.options(in: Cell(row: 0, col: 1)))
+        XCTAssertEqual(Set<Int>([4]), self.killerSudokuPartial!.options(in: Cell(row: 2, col: 3)))
+        XCTAssertEqual(Set<Int>([2]), self.killerSudokuPartial!.options(in: Cell(row: 2, col: 4)))
+        XCTAssertEqual(Set<Int>([8, 4]), self.killerSudokuPartial!.options(in: Cell(row: 2, col: 6)))
     }
 
+    func testOptionsForEmptyKiller() {
+        let currCell: Cell = Cell(row: 0, col: 0)
+
+        print(self.killerSudokuEmpty!.options(in: currCell))
+        print(self.killerSudokuEmpty!.cellToCageSum(currCell))
+        print("max:", self.killerSudokuEmpty!.mCageManager.computeMaxPossibleValueOfCellForACage(currCell))
+    }
 }

@@ -26,6 +26,7 @@
 		B960E1472786F84300B059E1 /* NormalSudokuSolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B960E1422786E44A00B059E1 /* NormalSudokuSolverTests.swift */; };
 		B960E14F2786FC3900B059E1 /* KillerSudokuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B960E14E2786FC3900B059E1 /* KillerSudokuTests.swift */; };
 		B960E1562786FF9C00B059E1 /* CageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B960E1552786FF9C00B059E1 /* CageManagerTests.swift */; };
+		B9622162278802B9002E6D73 /* Cage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9622161278802B9002E6D73 /* Cage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		B960E14C2786FC3900B059E1 /* KillerSudokuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KillerSudokuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B960E14E2786FC3900B059E1 /* KillerSudokuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillerSudokuTests.swift; sourceTree = "<group>"; };
 		B960E1552786FF9C00B059E1 /* CageManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CageManagerTests.swift; sourceTree = "<group>"; };
+		B9622161278802B9002E6D73 /* Cage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 				B95016EE2784BE880027841A /* KillerSudokuPuzzle.swift */,
 				B95016F02784BF500027841A /* Main.swift */,
 				B960E13227869AAA00B059E1 /* CageManager.swift */,
+				B9622161278802B9002E6D73 /* Cage.swift */,
 			);
 			path = SudokuSolver;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				B960E13327869AAA00B059E1 /* CageManager.swift in Sources */,
 				5054C842239FB9090019BCA6 /* SceneDelegate.swift in Sources */,
 				5054C844239FB9090019BCA6 /* ContentView.swift in Sources */,
+				B9622162278802B9002E6D73 /* Cage.swift in Sources */,
 				5054C872239FB93F0019BCA6 /* Sudoku.swift in Sources */,
 				B95016EF2784BE880027841A /* KillerSudokuPuzzle.swift in Sources */,
 			);

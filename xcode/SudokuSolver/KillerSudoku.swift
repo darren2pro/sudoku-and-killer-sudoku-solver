@@ -37,9 +37,13 @@ class KillerSudoku: NormalSudoku {
     }
 
     override func unSet(cell: Cell, to value: Int?) {
-        
+
         super.unSet(cell: cell, to: value)
         self.mCageManager.unSetAll(cell: cell, value: value)
+    }
+
+    internal func cellToCageSum(_ cell: Cell) -> Int {
+        return self.mCageManager.cellToCageSum(cell)
     }
 
 }

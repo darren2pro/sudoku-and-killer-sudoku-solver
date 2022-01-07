@@ -163,7 +163,7 @@ class KillerSudokuTests: XCTestCase {
 
     func testKillerWithEmptyPuzzleSolution() throws {
 
-        let testInputEmptySolution: SudokuPuzzle = [
+        let solutionForEmptyPuzzle: SudokuPuzzle = [
             [6, 2, 3, 8, 1, 9, 4, 5, 7],
             [1, 4, 5, 3, 7, 2, 9, 8, 6],
             [9, 7, 8, 6, 5, 4, 1, 2, 3],
@@ -183,13 +183,13 @@ class KillerSudokuTests: XCTestCase {
 
         print(self.killerSudokuEmpty!)
 
-        XCTAssertEqual(testInputEmptySolution, computedSolution)
+        XCTAssertEqual(solutionForEmptyPuzzle, computedSolution)
 
     }
 
     func testKillerWithPartialPuzzle() {
 
-        let testInputSolution: SudokuPuzzle = [
+        let solutionForPartialPuzzle: SudokuPuzzle = [
             [2, 4, 5, 8, 9, 6, 3, 1, 7],
             [8, 9, 6, 7, 3, 1, 4, 2, 5],
             [3, 1, 7, 4, 2, 5, 8, 6, 9],
@@ -207,7 +207,7 @@ class KillerSudokuTests: XCTestCase {
 
         let computedSolution: SudokuPuzzle = self.killerSudokuPartial!.mBoard
 
-        XCTAssertEqual(testInputSolution, computedSolution)
+        XCTAssertEqual(solutionForPartialPuzzle, computedSolution)
     }
 
 }
