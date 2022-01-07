@@ -48,7 +48,6 @@ class SudokuSolver {
             self.sudoku.set(cell: currCell, to: possibleValue)
 
             if solveSudokuPuzzleWithRecursion(Cell(row: currRow + 1, col: currCol)) {
-//                self.sudoku.printBoard()
                 return true
             } else {
                 // No solution so we set the
